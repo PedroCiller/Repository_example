@@ -104,3 +104,7 @@ sorted_to_string=sprintf('%d ', sorted);
 fprintf('%s\n', sorted_to_string); 
 
 % Changing the script from my computer
+
+
+
+% Changing from server and computer to see sync error
