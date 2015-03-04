@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of final_script</title>
+  <meta name="keywords" content="final_script">
+  <meta name="description" content="% 2 algorithms to sort an array of numbers.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">m2html</a> &gt; final_script.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for m2html&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>final_script
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>% 2 algorithms to sort an array of numbers.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function c=change(a,b) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% 2 algorithms to sort an array of numbers.
+  Author: Pedro Ciller Cutillas
+  Date: 3-3-2015
+  Information: The numbers are sorted in nondecreasing order.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% 2 algorithms to sort an array of numbers.</span>
+0002 <span class="comment">%  Author: Pedro Ciller Cutillas</span>
+0003 <span class="comment">%  Date: 3-3-2015</span>
+0004 <span class="comment">%  Information: The numbers are sorted in nondecreasing order.</span>
+0005 
+0006 <span class="comment">%% First algorithm: auxiliary function</span>
+0007 <span class="comment">% An auxiliary function that changes the positions of two elements in</span>
+0008 <span class="comment">% an array has been used. The code of this function is:</span>
+0009 
+0010 <a name="_sub0" href="#_subfunctions" class="code">function c=change(a,b)</a>
+0011     <span class="comment">% 'a' is a vector of numbers</span>
+0012     <span class="comment">% 'b' is an array of two numbers that contains the two indexes of</span>
+0013     <span class="comment">% 'a' that are to be changed.</span>
+0014     <span class="comment">%</span>
+0015     <span class="comment">% The output vector 'c' is the original vector 'a' with the elemenents</span>
+0016     <span class="comment">% whose indexes appear in 'b' permuted</span>
+0017     
+0018     aux=a(b(1));
+0019     a(b(1))=a(b(2));
+0020     a(b(2))=aux;
+0021     
+0022     c=a;
+0023 
+0024 
+0025     
+0026 <span class="comment">%% First algorithm: code</span>
+0027 
+0028 
+0029 clear all;
+0030 u=input(<span class="string">'introduce an array of numbers using the format [a,b,...]:'</span>);
+0031 
+0032 
+0033 sorted=[(max(u)+1).*ones(1,length(u))];
+0034 
+0035 <span class="comment">% The initialization values of the array 'sorted' are greater than</span>
+0036 <span class="comment">% the maximum element of vector u. This is required in the if conditional</span>
+0037 <span class="comment">% inside the following nested loop.</span>
+0038 
+0039 <span class="keyword">for</span> j=1:length(u)
+0040     <span class="keyword">for</span> i=1:length(u)-(j-1)
+0041          <span class="keyword">if</span>( u(i)&lt;=sorted(j))
+0042         sorted(j)=u(i);
+0043         position=i;
+0044          <span class="keyword">end</span>
+0045     <span class="keyword">end</span>
+0046     u=change(u,[position,length(u)-(j-1)]);
+0047 <span class="keyword">end</span>
+0048 
+0049 <span class="comment">% For each iteration of the index j, the j-th minimum value of the 'u'</span>
+0050 <span class="comment">% vector is calculated and stored in the j-th position of 'sorted'. Then,</span>
+0051 <span class="comment">% this value is moved to the end of the 'u' vector using the function</span>
+0052 <span class="comment">% 'change' in order to avoid being considered in the next iterations.</span>
+0053 
+0054 <span class="comment">% Display the results</span>
+0055 disp(sprintf(<span class="string">'The introduced array has been sorted and the result is: '</span>));
+0056 sorted_to_string=sprintf(<span class="string">'%d '</span>, sorted);
+0057 fprintf(<span class="string">'%s\n'</span>, sorted_to_string);
+0058 
+0059 <span class="comment">%% Second algorithm: code</span>
+0060 
+0061 clear all;
+0062 u=input(<span class="string">'introduce an array of numbers using the format [a,b,...]:'</span>);
+0063 
+0064 smaller=zeros(1,length(u));
+0065 equal=zeros(1,length(u));
+0066 
+0067 <span class="comment">% Arrays 'smaller' and 'equal' are going to store in their i-th posicion</span>
+0068 <span class="comment">% the number of elements of the input vector 'u' that are smaller and equal</span>
+0069 <span class="comment">% than the i-th element of the input 'u' vector. In the 'equal' array, the</span>
+0070 <span class="comment">% fact that each element is equal to itself will not be considered in the</span>
+0071 <span class="comment">% final count.</span>
+0072 
+0073 <span class="keyword">for</span> i=1:length(u)
+0074         <span class="keyword">for</span> j=1:length(u)
+0075             <span class="keyword">if</span>(i~=j)                           
+0076                             <span class="keyword">if</span>(u(j)&lt;u(i))
+0077                                 smaller(i)= smaller(i)+1;
+0078                             <span class="keyword">elseif</span>(u(j)==u(i))
+0079                                 equal(i)= equal(i)+1;
+0080                             <span class="keyword">end</span>
+0081             <span class="keyword">end</span>
+0082         <span class="keyword">end</span>
+0083 <span class="keyword">end</span>
+0084 
+0085 sorted=(max(u)+1).*ones(1,length(u));
+0086 
+0087 <span class="comment">% The initialization values of the array 'sorted' are greater than</span>
+0088 <span class="comment">% the maximum element of vector u. This is required in the if conditional</span>
+0089 <span class="comment">% inside the following nested loop. It would be enough to initialize the</span>
+0090 <span class="comment">% array 'sort' with any number that is not contained in the 'u' vector.</span>
+0091 
+0092 <span class="keyword">for</span> i=1:length(u)
+0093     <span class="keyword">for</span> j=1:equal(i)+1
+0094         <span class="keyword">if</span>(sorted(smaller(i)+j)==max(u)+1)
+0095             sorted(smaller(i)+j)=u(i);
+0096         <span class="keyword">end</span>
+0097     <span class="keyword">end</span>
+0098 <span class="keyword">end</span>
+0099 
+0100 <span class="comment">% The previous nested for loops determine each element of the 'sort' array</span>
+0101 <span class="comment">% using the information previously stored in 'smaller' and 'equal'. The case</span>
+0102 <span class="comment">% equal(i)~=0 is solved taking into account the initialization values of</span>
+0103 <span class="comment">% the 'sort' array.</span>
+0104 
+0105 <span class="comment">% Display the results</span>
+0106 disp(sprintf(<span class="string">'The introduced array has been sorted and the result is: '</span>));
+0107 sorted_to_string=sprintf(<span class="string">'%d '</span>, sorted);
+0108 fprintf(<span class="string">'%s\n'</span>, sorted_to_string);</pre></div>
+<hr><address>Generated on Wed 04-Mar-2015 17:09:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
